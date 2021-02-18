@@ -5,12 +5,14 @@ import clipboard
 import pyperclip
 
 
-if __name__ == "__main__":
-    with open('./temp.csv', 'r') as f:
+def main(data_set_path: str = None):
+    if data_set_path is None:
+        data_set_path = './temp.csv'
+
+    with open(data_set_path, 'r') as f:
         raw_l: List[str] = f.read().splitlines()
 
-
-    # Use Case   
+    # Use Case
     print("You passed in this list: {}".format(raw_l))
     raw_s: str = '{' + ",".join(map(lambda row: '{' + row + '}', raw_l)) + '}'
     print("WolframAlpha matrix: {}".format(raw_s))
@@ -20,3 +22,7 @@ if __name__ == "__main__":
     clipboard.copy(wolf_command)
     pyperclip.copy(wolf_command)
     print("Copied to clipboard")
+
+
+if __name__ == "__main__":
+    main()
