@@ -6,6 +6,9 @@ import pyperclip
 
 
 def main(data_set_path: str = None):
+
+    debug = False
+
     if data_set_path is None:
         data_set_path = './temp.csv'
 
@@ -15,13 +18,19 @@ def main(data_set_path: str = None):
     # Use Case
     print("You passed in this list: {}".format(raw_l))
     raw_s: str = '{' + ",".join(map(lambda row: '{' + row + '}', raw_l)) + '}'
-    print("WolframAlpha matrix: {}".format(raw_s))
+    if debug:   
+        print("WolframAlpha matrix: {}".format(raw_s))
 
-    # Nice to have (not working)
-    wolf_command = 'row reduce ' + raw_s
-    clipboard.copy(wolf_command)
-    pyperclip.copy(wolf_command)
-    print("Copied to clipboard")
+    # Build Wolfram command
+    wolf_prefixes = ['row reduce', 'determinant', 'null space']
+    wolf_prefix = wolf_prefixes[0]
+    wolf_command = wolf_prefix + ' ' + raw_s
+    print("Suggested command: {}".format(wolf_command))
+
+    # Copy to Clipboard - Nice to have (not working)Q
+    # clipboard.copy(wolf_command)
+    # pyperclip.copy(wolf_command)
+    # print("Copied to clipboard")
 
 
 if __name__ == "__main__":
